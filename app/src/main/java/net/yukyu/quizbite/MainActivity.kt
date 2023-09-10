@@ -22,7 +22,7 @@ class MainActivity : AppCompatActivity() {
 
         textView.visibility = View.VISIBLE
         webView.visibility = View.GONE
-        textView.text = "Hello!"
+        textView.text = "Chromeなどのアプリで共有先でQuizBiteを選択して起動してください"
 
     }
     override fun onNewIntent(intent: Intent?) {
