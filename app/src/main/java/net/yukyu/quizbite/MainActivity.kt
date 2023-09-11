@@ -11,36 +11,34 @@ import android.widget.TextView
 
 class MainActivity : AppCompatActivity() {
     private lateinit var webView: WebView
-    private lateinit var textView: TextView
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
+        //webviewの初期設定
         webView = findViewById(R.id.webview)
-        textView = findViewById(R.id.textView)
+        webView.webViewClient = WebViewClient()
+        webView.settings.javaScriptEnabled = true
 
-        textView.visibility = View.VISIBLE
-        webView.visibility = View.GONE
-        textView.text = "Chromeなどのアプリで共有先でQuizBiteを選択して起動してください"
-
+        if (intent?.action == Intent.ACTION_SEND && "text/plain" == intent.type) {
+            intent.getStringExtra(Intent.EXTRA_TEXT)?.let {
+                webView.loadUrl("${QUIZBITE_URL}?url=$it")
+            }
+        } else {
+            webView.loadUrl(QUIZBITE_URL)
+        }
     }
     override fun onNewIntent(intent: Intent?) {
         super.onNewIntent(intent)
-        textView.visibility = View.GONE
-        webView.visibility = View.VISIBLE
-
-        webView = findViewById(R.id.webview)
-        webView.webViewClient = WebViewClient()
-
-        // 他のWebViewの設定
-        webView.settings.javaScriptEnabled = true
         if(intent?.action == Intent.ACTION_SEND && "text/plain" == intent.type) {
             intent.getStringExtra(Intent.EXTRA_TEXT)?.let {
-                webView.loadUrl("https://quizbite.yukyu.net?url=$it")
+                webView.loadUrl(Companion.QUIZBITE_URL)
             }
-
+        } else {
+            webView.loadUrl(QUIZBITE_URL)
         }
+    }
 
+    companion object {
+        private const val QUIZBITE_URL = "https://quizbite.yukyu.net"
     }
 }
