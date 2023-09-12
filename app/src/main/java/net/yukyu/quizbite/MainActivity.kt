@@ -32,7 +32,7 @@ class MainActivity : AppCompatActivity() {
         super.onNewIntent(intent)
         if(intent?.action == Intent.ACTION_SEND && "text/plain" == intent.type) {
             intent.getStringExtra(Intent.EXTRA_TEXT)?.let {
-                webView.loadUrl(Companion.QUIZBITE_URL)
+                webView.loadUrl("${QUIZBITE_URL}?url=$it")
             }
         } else {
             webView.loadUrl(QUIZBITE_URL)
