@@ -3,6 +3,7 @@ package net.yukyu.quizbite
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.KeyEvent
 import android.webkit.WebViewClient
 import android.webkit.WebView
 import android.widget.Toolbar
@@ -37,6 +38,17 @@ class MainActivity : AppCompatActivity() {
         } else {
             webView.loadUrl(QUIZBITE_URL)
         }
+    }
+
+    override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
+        // 戻るボタンが押される かつ webviewで前に戻ることができるとき
+        if (keyCode == KeyEvent.KEYCODE_BACK && webView.canGoBack()) {
+            // 前のページに戻る
+            webView.goBack()
+            return true
+        }
+
+        return super.onKeyDown(keyCode, event)
     }
 
     companion object {
