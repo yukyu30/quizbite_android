@@ -3,10 +3,9 @@ package net.yukyu.quizbite
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.View
 import android.webkit.WebViewClient
 import android.webkit.WebView
-import android.widget.TextView
+import android.widget.Toolbar
 
 
 class MainActivity : AppCompatActivity() {
@@ -14,10 +13,12 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        //webviewの初期設定
+
+        //webViewの初期設定
         webView = findViewById(R.id.webview)
         webView.webViewClient = WebViewClient()
         webView.settings.javaScriptEnabled = true
+        webView.settings.domStorageEnabled = true
 
         if (intent?.action == Intent.ACTION_SEND && "text/plain" == intent.type) {
             intent.getStringExtra(Intent.EXTRA_TEXT)?.let {
